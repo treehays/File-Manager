@@ -17,8 +17,4 @@ public class FilesResponseModel
 public class FileDTO
 {
     public string Name { get; set; }
-    public long Filesize { get; set; }
-    public string FileType { get; set; }
-    public string Title { get; set; }
-    public string Extension { get; set; }
 }

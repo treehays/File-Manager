@@ -45,11 +45,7 @@ public class FileService : IFileService
             Message = "file successfully uploaded",
             Data = new FileDTO
             {
-                Extension = fileExtension,
-                FileType = fileType,
                 Name = fileNameWithExtension,
-                Title = fileWithoutName,
-                Filesize = fileSizeInKb,
             },
         };
         return fileSystemReponse;
@@ -82,10 +78,8 @@ public class FileService : IFileService
             Message = "file successfully uploaded",
             Data = new FileDatabaseDTO
             {
-                Extension = fileExtension,
-                FileType = fileType,
+
                 Name = fileWithoutName,
-                Filesize = fileSizeInKb,
             },
         };
         //converting

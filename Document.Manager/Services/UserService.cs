@@ -33,7 +33,7 @@ public class UserService : IUserService
         {
             var attachmentContent = new SendSmtpEmailAttachment
             {
-                Name = item.Title,
+                Name = item.Name,
                 Url = "Url.com",
                 Content = File.ReadAllBytes(Path.Combine(_webHostEnvironment.WebRootPath, "Documents", item.Name)),
             };
