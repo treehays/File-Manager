@@ -26,10 +26,10 @@ public class UserService : IUserService
     public async Task<UserResponseModelDTO> AddAsync(AddUserRequestModelDTO model)
     {
         var user = model.Adapt<User>();
-        user.TransactionNumber = new Random().Next(1000000000, int.MaxValue);
+        var transactionNumber = new Random().Next(1000000000, int.MaxValue);
 
-        var fileResponse = await _fileService.ListOfFilesToSystem(model.FormFiles);
-
+        var fileResponse = await _fileService.ListOfFilesToSystem(model.FormFiles, transactionNumber);
+        //listEmail
         var listOfAttachment = new List<SendSmtpEmailAttachment>();
         foreach (var item in fileResponse.Datas)
         {
@@ -51,7 +51,13 @@ public class UserService : IUserService
         };
 
         var sendToEmail = await _brevoEmail.SendEmailWithAttachment(emailContent);
-        user.AttachedDocuments = fileResponse.Datas.Adapt<List<AttachedDocument>>();
+        var attachedDocuments = fileResponse.Datas.Adapt<List<AttachedDocument>>();
+
+        var transaction = model.Adapt<Transaction>();
+        transaction.TransactionNumber = transactionNumber;
+        transaction.AttachedDocuments = attachedDocuments;
+        user.Transactions.Add(transaction);
+
         await _userRepository.AddAsync(user);
         var response = new UserResponseModelDTO
         {
@@ -62,22 +68,22 @@ public class UserService : IUserService
         return response;
     }
 
-    public async Task<UsersResponseModelDTO> GetAllUsersAsync()
-    {
-        var users = await _userRepository.GetListAsync(x => !x.IsDeleted);
-        var response = new UsersResponseModelDTO
-        {
-            Status = true,
-            Message = "Retrirved succesfully",
-            Datas = users.Adapt<List<UsersDTO>>(),
-        };
-        return response;
-    }
+    //public async Task<UsersResponseModelDTO> GetAllUsersAsync()
+    //{
+    //    var users = await _userRepository.GetListAsync();
+    //    var response = new UsersResponseModelDTO
+    //    {
+    //        Status = true,
+    //        Message = "Retrirved succesfully",
+    //        Datas = users.Adapt<List<UsersDTO>>(),
+    //    };
+    //    return response;
+    //}
 
     public async Task<UserResponseModelDTO> GetByEmailAndTransactionIdAsync(GetUserDocumentsRequestModel model)
     {
         //var user  = await _userRepository.GetAsync(x => x.Equals(email));
-        var user = await _userRepository.GetAsync(x => x.Email == model.Email && x.TransactionNumber == model.TransactionNumber);
+        var user = await _userRepository.GetDocumentsByEmailAndTransactionNumberAsync(model.Email, model.TransactionNumber);
         var response = new UserResponseModelDTO
         {
             Status = true,

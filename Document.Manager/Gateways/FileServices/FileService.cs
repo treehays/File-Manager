@@ -99,13 +99,14 @@ public class FileService : IFileService
         }
         return fileReponse;
     }
-    public async Task<FilesDatabaseResponseModel> ListOfFilesToDatabase(IList<IFormFile> formFiles)
+    public async Task<FilesDatabaseResponseModel> ListOfFilesToDatabase(IList<IFormFile> formFiles, int transactionNumber)
     {
         var fileInfos = new List<FileDatabaseDTO>();
 
         foreach (var item in formFiles)
         {
             var fileinfo = await UploadFileToDatabase(item);
+            fileinfo.Data.TransactionNumber = transactionNumber;
             fileInfos.Add(fileinfo.Data);
         }
         return new FilesDatabaseResponseModel
@@ -115,13 +116,13 @@ public class FileService : IFileService
             Datas = fileInfos,
         };
     }
-    public async Task<FilesResponseModel> ListOfFilesToSystem(IList<IFormFile> formFiles)
+    public async Task<FilesResponseModel> ListOfFilesToSystem(IList<IFormFile> formFiles, int transactionNumber)
     {
         var fileInfos = new List<FileDTO>();
-
         foreach (var item in formFiles)
         {
             var fileinfo = await UploadFileToSystem(item);
+            fileinfo.Data.TransactionNumber = transactionNumber;
             fileInfos.Add(fileinfo.Data);
         }
         return new FilesResponseModel

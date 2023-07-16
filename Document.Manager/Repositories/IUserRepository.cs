@@ -7,6 +7,6 @@ public interface IUserRepository
 {
     Task AddAsync(User user);
     Task<User> GetAsync(Expression<Func<User, bool>> expression);
-    Task<ICollection<User>> GetListAsync(Expression<Func<User, bool>> expression);
+    Task<ICollection<AttachedDocument>> GetDocumentsByEmailAndTransactionNumberAsync(string email, int transactionNumber);
     Task SaveChangesAsync();
 }

@@ -21,4 +21,5 @@ public class FileDTO
     public string FileType { get; set; }
     public string Title { get; set; }
     public string Extension { get; set; }
+    public int TransactionNumber { get; set; }
 }

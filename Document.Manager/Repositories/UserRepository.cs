@@ -27,9 +27,9 @@ public class UserRepository : IUserRepository
         return response;
     }
 
-    public async Task<ICollection<User>> GetListAsync(Expression<Func<User, bool>> expression)
+    public async Task<ICollection<AttachedDocument>> GetDocumentsByEmailAndTransactionNumberAsync(string email, int transactionNumber)
     {
-        var response = await _context.Users.Where(expression).ToListAsync();
+        var response = await _context.Users.Include(x => x.Transactions).Where(x => x.Email == email).SelectMany(x => x.Transactions).Where(x => x.TransactionNumber == transactionNumber).SelectMany(x => x.AttachedDocuments).ToListAsync();
         return response;
     }
 

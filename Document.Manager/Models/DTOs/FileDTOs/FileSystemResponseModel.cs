@@ -21,5 +21,6 @@ public class FileDatabaseDTO
     public string Extension { get; set; }
     public long Filesize { get; set; }
     public string Title { get; set; }
+    public int TransactionNumber { get; set; }
     public byte[] FileStream { get; set; }
 }
