@@ -22,6 +22,11 @@ public class UsersController : Controller
 
         return View();
     }
+    public async Task<IActionResult> GetUserDocuments()
+    {
+
+        return View();
+    }
 
     public async Task<IActionResult> AddUser()
     {

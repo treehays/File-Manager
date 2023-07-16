@@ -10,7 +10,6 @@ public class User : AuditableEntity
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Address { get; set; }
-    public long TransactionNumber { get; set; } //= new Random().Next(1000000000, 2147483647);
-    public ICollection<AttachedDocument> AttachedDocuments { get; set; } = new HashSet<AttachedDocument>();
+    public ICollection<Transaction> Transactions{ get; set; } = new HashSet<Transaction>();
 
 }

@@ -8,7 +8,9 @@ public class AttachedDocument : AuditableEntity
     public string FileType { get; set; }
     public string Extension { get; set; }
     public byte[]? FileStream { get; set; }
-    public string UserEmail { get; set; }
-    //[ForeignKey("Email")]
-    public User User { get; set; }
+    public string TransactionId { get; set; }
+    public Transaction Transaction { get; set; }
+    //public string UserEmail { get; set; }
+    ////[ForeignKey("Email")]
+    //public User User { get; set; }
 }

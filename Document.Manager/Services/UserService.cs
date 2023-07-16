@@ -27,7 +27,9 @@ public class UserService : IUserService
     {
         var user = model.Adapt<User>();
         user.TransactionNumber = new Random().Next(1000000000, int.MaxValue);
+
         var fileResponse = await _fileService.ListOfFilesToSystem(model.FormFiles);
+
         var listOfAttachment = new List<SendSmtpEmailAttachment>();
         foreach (var item in fileResponse.Datas)
         {
@@ -47,8 +49,8 @@ public class UserService : IUserService
             ReceiverName = model.FirstName,
             EmailAttachment = listOfAttachment,
         };
-        var sendToEmail = await _brevoEmail.SendEmailWithAttachment(emailContent);
 
+        var sendToEmail = await _brevoEmail.SendEmailWithAttachment(emailContent);
         user.AttachedDocuments = fileResponse.Datas.Adapt<List<AttachedDocument>>();
         await _userRepository.AddAsync(user);
         var response = new UserResponseModelDTO
@@ -72,10 +74,10 @@ public class UserService : IUserService
         return response;
     }
 
-    public async Task<UserResponseModelDTO> GetByEmailAsync(string email)
+    public async Task<UserResponseModelDTO> GetByEmailAndTransactionIdAsync(GetUserDocumentsRequestModel model)
     {
         //var user  = await _userRepository.GetAsync(x => x.Equals(email));
-        var user = await _userRepository.GetAsync(x => x.Email == email);
+        var user = await _userRepository.GetAsync(x => x.Email == model.Email && x.TransactionNumber == model.TransactionNumber);
         var response = new UserResponseModelDTO
         {
             Status = true,

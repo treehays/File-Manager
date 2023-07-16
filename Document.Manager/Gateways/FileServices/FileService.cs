@@ -26,13 +26,14 @@ public class FileService : IFileService
         if (!Directory.Exists(fileDestinationPath)) Directory.CreateDirectory(fileDestinationPath);
 
         //var fileName = Guid.NewGuid().ToString().Replace('-', 's') + Path.GetExtension(file.FileName);
-        var fileNameWithExtension = formFile.FileName;
+        var fileName = $"{Ulid.NewUlid()}{formFile.FileName}";
+        //var fileNameWithExtension = formFile.FileName;
         var fileWithoutName = Path.GetFileNameWithoutExtension(formFile.FileName);
         var fileType = formFile.ContentType.ToLower();
         var fileExtension = Path.GetExtension(formFile.FileName);
         var fileSizeInKb = formFile.Length / 1024;
         var fileSourcePath = Path.GetFileName(formFile.FileName);
-        var destinationFullPath = Path.Combine(fileDestinationPath, fileNameWithExtension);
+        var destinationFullPath = Path.Combine(fileDestinationPath, fileName);
 
         using (var stream = new FileStream(destinationFullPath, FileMode.Create))
         {
@@ -47,7 +48,7 @@ public class FileService : IFileService
             {
                 Extension = fileExtension,
                 FileType = fileType,
-                Name = fileNameWithExtension,
+                Name = fileName,
                 Title = fileWithoutName,
                 Filesize = fileSizeInKb,
             },
@@ -71,7 +72,8 @@ public class FileService : IFileService
 
         if (!Directory.Exists(fileDestinationPath)) Directory.CreateDirectory(fileDestinationPath);
 
-        var fileWithoutName = Path.GetFileNameWithoutExtension(formFile.FileName);
+        var fileWithoutExtension = Path.GetFileNameWithoutExtension(formFile.FileName);
+        var fileName = $"{Ulid.NewUlid()}{formFile.FileName}";
         var fileType = formFile.ContentType.ToLower();
         var fileExtension = Path.GetExtension(formFile.FileName);
         var fileSizeInKb = formFile.Length / 1024;
@@ -84,8 +86,9 @@ public class FileService : IFileService
             {
                 Extension = fileExtension,
                 FileType = fileType,
-                Name = fileWithoutName,
+                Name = fileName,
                 Filesize = fileSizeInKb,
+                Title = fileWithoutExtension,
             },
         };
         //converting
