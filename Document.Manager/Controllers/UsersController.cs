@@ -17,6 +17,12 @@ public class UsersController : Controller
         return View();
     }
 
+    public async Task<IActionResult> GetUsers()
+    {
+
+        return View();
+    }
+
     public async Task<IActionResult> AddUser()
     {
 
