@@ -1,4 +1,5 @@
 ﻿using Document.Manager.Gateways.Context;
+using Document.Manager.Gateways.EmailServices;
 using Document.Manager.Gateways.FileServices;
 using Document.Manager.Repositories;
 using Document.Manager.Services;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services.AddScoped<IUserService, UserService>()
-            .AddScoped<IFileService, FileService>();
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IBrevoEmail, BrevoEmail>();
     }
 }

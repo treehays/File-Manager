@@ -76,14 +76,7 @@
 
         for (var i = 0; i < files.length; i++) {
             var fname = files[i].name;
-            //var re = /(\.doc|\.docx|\.pdf|\.xlxs)$/i;
-            //if (!re.exec(fname)) {
-            //    alert("File extension not supported!");
-            //    return false;
-            //}
-            //else {
             data.append("FormFiles", files[i]);
-            //}
         }
         data.append("FirstName", $("#FirstName").val());
         data.append("LastName", $("#LastName").val());
@@ -98,7 +91,8 @@
                     if (e.lengthComputable) {
                         var loaded = e.loaded;
                         var total = e.total;
-                        var percent = Math.round((loaded / total) * 100);
+                            //var percent = Math.round((total) / 1024);
+                            var percent = Math.round((loaded / total) * 100);
 
                         $("#pb").attr("aria-valuenow", percent).css("width", percent + "%").text(percent + "%");
                     };
