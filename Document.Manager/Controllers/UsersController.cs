@@ -23,6 +23,19 @@ public class UsersController : Controller
         return View();
     }
 
+    public async Task<IActionResult> GetUserDocuments(GetUserDocumentsRequestModel model)
+    {
+        var documents = await _userService.GetByEmailAndTransactionIdAsync(model);
+        if (!documents.Status)
+        {
+            TempData["failed"] = documents.Message;
+            return View(documents);
+        }
+        TempData["success"] = documents.Message;
+
+        return View(documents);
+    }
+
     public async Task<IActionResult> AddUser()
     {
 
@@ -33,6 +46,11 @@ public class UsersController : Controller
     public async Task<IActionResult> AddUser(AddUserRequestModelDTO model)
     {
         var user = await _userService.AddAsync(model);
+        if (!user.Status)
+        {
+            TempData["failed"] = user.Message;
+        }
+        TempData["success"] = user.Message;
         return View();
     }
 }

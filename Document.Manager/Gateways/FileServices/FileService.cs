@@ -26,13 +26,14 @@ public class FileService : IFileService
         if (!Directory.Exists(fileDestinationPath)) Directory.CreateDirectory(fileDestinationPath);
 
         //var fileName = Guid.NewGuid().ToString().Replace('-', 's') + Path.GetExtension(file.FileName);
-        var fileNameWithExtension = formFile.FileName;
+        var fileName = $"{Ulid.NewUlid()}{formFile.FileName}";
+        //var fileNameWithExtension = formFile.FileName;
         var fileWithoutName = Path.GetFileNameWithoutExtension(formFile.FileName);
         var fileType = formFile.ContentType.ToLower();
         var fileExtension = Path.GetExtension(formFile.FileName);
         var fileSizeInKb = formFile.Length / 1024;
         var fileSourcePath = Path.GetFileName(formFile.FileName);
-        var destinationFullPath = Path.Combine(fileDestinationPath, fileNameWithExtension);
+        var destinationFullPath = Path.Combine(fileDestinationPath, fileName);
 
         using (var stream = new FileStream(destinationFullPath, FileMode.Create))
         {
@@ -45,7 +46,11 @@ public class FileService : IFileService
             Message = "file successfully uploaded",
             Data = new FileDTO
             {
-                Name = fileNameWithExtension,
+                Extension = fileExtension,
+                FileType = fileType,
+                Name = fileName,
+                Title = fileWithoutName,
+                Filesize = fileSizeInKb,
             },
         };
         return fileSystemReponse;
@@ -67,7 +72,8 @@ public class FileService : IFileService
 
         if (!Directory.Exists(fileDestinationPath)) Directory.CreateDirectory(fileDestinationPath);
 
-        var fileWithoutName = Path.GetFileNameWithoutExtension(formFile.FileName);
+        var fileWithoutExtension = Path.GetFileNameWithoutExtension(formFile.FileName);
+        var fileName = $"{Ulid.NewUlid()}{formFile.FileName}";
         var fileType = formFile.ContentType.ToLower();
         var fileExtension = Path.GetExtension(formFile.FileName);
         var fileSizeInKb = formFile.Length / 1024;
@@ -78,8 +84,11 @@ public class FileService : IFileService
             Message = "file successfully uploaded",
             Data = new FileDatabaseDTO
             {
-
-                Name = fileWithoutName,
+                Extension = fileExtension,
+                FileType = fileType,
+                Name = fileName,
+                Filesize = fileSizeInKb,
+                Title = fileWithoutExtension,
             },
         };
         //converting
@@ -90,13 +99,14 @@ public class FileService : IFileService
         }
         return fileReponse;
     }
-    public async Task<FilesDatabaseResponseModel> ListOfFilesToDatabase(IList<IFormFile> formFiles)
+    public async Task<FilesDatabaseResponseModel> ListOfFilesToDatabase(IList<IFormFile> formFiles, int transactionNumber)
     {
         var fileInfos = new List<FileDatabaseDTO>();
 
         foreach (var item in formFiles)
         {
             var fileinfo = await UploadFileToDatabase(item);
+            fileinfo.Data.TransactionNumber = transactionNumber;
             fileInfos.Add(fileinfo.Data);
         }
         return new FilesDatabaseResponseModel
@@ -106,13 +116,13 @@ public class FileService : IFileService
             Datas = fileInfos,
         };
     }
-    public async Task<FilesResponseModel> ListOfFilesToSystem(IList<IFormFile> formFiles)
+    public async Task<FilesResponseModel> ListOfFilesToSystem(IList<IFormFile> formFiles, int transactionNumber)
     {
         var fileInfos = new List<FileDTO>();
-
         foreach (var item in formFiles)
         {
             var fileinfo = await UploadFileToSystem(item);
+            fileinfo.Data.TransactionNumber = transactionNumber;
             fileInfos.Add(fileinfo.Data);
         }
         return new FilesResponseModel

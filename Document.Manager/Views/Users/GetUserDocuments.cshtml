@@ -1,0 +1,64 @@
+﻿@using Document.Manager.Models.DTOs.UserDTOs;
+@model UsersResponseModelDTO
+@{
+    Layout = "_Layout";
+}
+<style>
+    .grid-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .grid-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
+<partial name="_Notification" />
+<main class="main">
+    <div>
+        <form asp-controller="Users" asp-action="GetUserDocuments">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                        <input type="text" name="TransactionNumber" id="form3Example1m" class="form-control form-control-lg" />
+                        <label class="form-label">Search</label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                        <input type="text" name="Email" id="form3Example1m" class="form-control form-control-lg" />
+                        <label class="form-label">Search</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    @if (Model.Status)
+    {
+
+        <h1>Document List</h1>
+        <ul class="grid-view">
+            @foreach (var item in Model.Datas)
+            {
+                if (item.AttachedDocumentFileType != "image/jpeg")
+                {
+                    item.AttachedDocumentName = "Default.png";
+                }
+                <li class="grid-item">
+                    <img src="/Documents/Screenshot.png" alt="@item.AttachedDocumentTitle" style="max-width: 260px; max-height: 260px;">
+                    <br />
+                    <a href="/Documents/@item.AttachedDocumentName">@item.AttachedDocumentTitle</a>
+                </li>
+            }
+        </ul>
+
+    }
+ 
+</main>
