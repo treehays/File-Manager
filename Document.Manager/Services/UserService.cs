@@ -70,9 +70,10 @@ public class UserService : IUserService
         var response = new UserResponseModelDTO
         {
             Status = true,
-            Message = "Succesfully Created..",
+            Message = $"Succesfully Created.. and your transaction Id is {transactionNumber}",
             Data = user.Adapt<UsersDTO>(),
         };
+        response.Data.TransactionNumber = transactionNumber;
         return response;
     }
 

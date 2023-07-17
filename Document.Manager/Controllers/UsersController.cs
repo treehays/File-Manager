@@ -14,7 +14,7 @@ public class UsersController : Controller
 
     public IActionResult Index()
     {
-
+        //  ViewBag.Number = TempData.Peek("TNumber");
         return View();
     }
 
@@ -52,6 +52,7 @@ public class UsersController : Controller
             TempData["failed"] = user.Message;
             return View();
         }
+        //TempData["TNumber"] = user.Data.TransactionNumber;
         TempData["success"] = user.Message;
         return RedirectToAction("index", "Home");
     }
