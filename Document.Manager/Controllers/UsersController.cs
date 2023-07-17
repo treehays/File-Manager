@@ -29,6 +29,7 @@ public class UsersController : Controller
         if (!documents.Status)
         {
             TempData["failed"] = documents.Message;
+            return View(documents);
         }
         TempData["success"] = documents.Message;
 

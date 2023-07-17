@@ -3,7 +3,20 @@
 @{
     Layout = "_Layout";
 }
+<style>
+    .grid-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+    }
 
+    .grid-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
 <partial name="_Notification" />
 <main class="main">
     <div>
@@ -27,70 +40,25 @@
             </div>
         </form>
     </div>
-@if (Model.Status)
+    @if (Model.Status)
     {
 
-        <div class="row">
-            <div class="col-sm-11">
-                <h2>
-                    <a asp-action="Create">Admin</a>
-                </h2>
-                <div class="table-responsive">
-
-                    <table class="table table-hover table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Student Status</th>
-                                <th scope="col">Password</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var serialNumber = 1;
-                            }
-                            @foreach (var item in Model.Datas)
-                            {
-                                <tr>
-                                    <th scope="row">@serialNumber </th>
-                                    <td>@item.AttachedDocumentName</td>
-                                    <td>@item.AttachedDocumentTitle</td>
-                                    <td>@item.AttachedDocumentFileType</td>
-                                    <td>@item.TransactionNumber</td>
-                                    <td>@item.TransactionNumber</td>
-                                    <td>
-                                        <a href="/Documents/@item.AttachedDocumentName">Details</a>
-                                    </td>
-                                    <td>
-                                        <a asp-action="DeletePreview" asp-route-id="@item.Email" class="btn btn-danger">Delete</a>
-                                    </td>
-
-                                    <td>
-                                        <a asp-action="UpdateProfile" asp-route-id="@item..Email" class="btn btn-info">Update</a>
-                                    </td>
-
-                                </tr>
-
-                                serialNumber++;
-                            }
-                        </tbody>
-                        @section Scripts
-                        {
-                        <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
-                        <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
-                        <script src="~/js/customerDatatable.js"></script>
-                    }
-                    </table>
-                </div>
-            </div>
-        </div>
+        <h1>Document List</h1>
+        <ul class="grid-view">
+            @foreach (var item in Model.Datas)
+            {
+                if (item.AttachedDocumentFileType != "image/jpeg")
+                {
+                    item.AttachedDocumentName = "Default.png";
+                }
+                <li class="grid-item">
+                    <img src="/Documents/Screenshot.png" alt="@item.AttachedDocumentTitle" style="max-width: 260px; max-height: 260px;">
+                    <br />
+                    <a href="/Documents/@item.AttachedDocumentName">@item.AttachedDocumentTitle</a>
+                </li>
+            }
+        </ul>
 
     }
+ 
 </main>

@@ -36,8 +36,7 @@ public class UserService : IUserService
         {
             var attachmentContent = new SendSmtpEmailAttachment
             {
-                Name = item.Title,
-                Url = "Url.com",
+                Name = item.Name,
                 Content = File.ReadAllBytes(Path.Combine(_webHostEnvironment.WebRootPath, "Documents", item.Name)),
             };
             listOfAttachment.Add(attachmentContent);
@@ -78,11 +77,11 @@ public class UserService : IUserService
             return new UsersResponseModelDTO
             {
                 Status = false,
-                Message = "No document yet",
+                Message = "Enter valid word",
                 Datas = Enumerable.Empty<UsersDTO>().ToList(),
             };
         }
-        //var user  = await _userRepository.GetAsync(x => x.Equals(email));
+
         var user = await _userRepository.GetDocumentsByEmailAndTransactionNumberAsync(model.Email, model.TransactionNumber);
 
         if (user.Count == 0)
