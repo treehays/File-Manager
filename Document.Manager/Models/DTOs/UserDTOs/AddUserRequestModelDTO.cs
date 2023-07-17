@@ -1,4 +1,5 @@
-﻿using Document.Manager.Models.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using Document.Manager.Models.Enums;
 
 namespace Document.Manager.Models.DTOs.UserDTOs;
 
@@ -6,6 +7,7 @@ public class AddUserRequestModelDTO
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    [EmailAddress(ErrorMessage = "Invalid Email Address")]
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Address { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace Document.Manager.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 
+namespace Document.Manager.Models.Entities;
+
+[Index(nameof(Email), IsUnique = true)]
 public class User : AuditableEntity
 {
     public string FirstName { get; set; }

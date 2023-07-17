@@ -1,5 +1,7 @@
-﻿namespace Document.Manager.Models.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Document.Manager.Models.Entities;
+[Table("Documents")]
 public class AttachedDocument : AuditableEntity
 {
     public string Name { get; set; }

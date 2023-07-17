@@ -1,6 +1,8 @@
 ﻿@using Document.Manager.Models.DTOs.UserDTOs;
 @using Document.Manager.Models.Enums
 @model AddUserRequestModelDTO
+
+<partial name="_Notification" />
 <h4>Register User</h4>
 <hr />
 <div class="row">
@@ -67,52 +69,52 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-<script>
-    function Save() {
-        debugger;
+    <script>
+        function Save() {
+            debugger;
             var fileUpload = $("#formFiles").get(0);
-        var files = fileUpload.files;
-        var data = new FormData();
+            var files = fileUpload.files;
+            var data = new FormData();
 
-        for (var i = 0; i < files.length; i++) {
-            var fname = files[i].name;
-            data.append("FormFiles", files[i]);
-        }
-        data.append("FirstName", $("#FirstName").val());
-        data.append("LastName", $("#LastName").val());
-        data.append("Email", $("#Email").val());
-        data.append("Address", $("#Address").val());
-        data.append("PhoneNumber", $("#PhoneNumber").val());
-        data.append("Gender", $("#Gender").val());
-        $.ajax({
-            xhr: function () {
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener("progress", function (e) {
-                    if (e.lengthComputable) {
-                        var loaded = e.loaded;
-                        var total = e.total;
+            for (var i = 0; i < files.length; i++) {
+                var fname = files[i].name;
+                data.append("FormFiles", files[i]);
+            }
+            data.append("FirstName", $("#FirstName").val());
+            data.append("LastName", $("#LastName").val());
+            data.append("Email", $("#Email").val());
+            data.append("Address", $("#Address").val());
+            data.append("PhoneNumber", $("#PhoneNumber").val());
+            data.append("Gender", $("#Gender").val());
+            $.ajax({
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (e) {
+                        if (e.lengthComputable) {
+                            var loaded = e.loaded;
+                            var total = e.total;
                             //var percent = Math.round((total) / 1024);
                             var percent = Math.round((loaded / total) * 100);
 
-                        $("#pb").attr("aria-valuenow", percent).css("width", percent + "%").text(percent + "%");
-                    };
+                            $("#pb").attr("aria-valuenow", percent).css("width", percent + "%").text(percent + "%");
+                        };
 
-                });
-                return xhr;
-            },
-            type: "post",
-            url: "/Users/AddUser",
-            //data: data,
-            data: data,
-            dataType: "json",
-            contentType: false, // Not to set any content header
-            processData: false,
-            cache: false,
-            success: function (ss) {
+                    });
+                    return xhr;
+                },
+                type: "post",
+                url: "/Users/AddUser",
+                //data: data,
+                data: data,
+                dataType: "json",
+                contentType: false, // Not to set any content header
+                processData: false,
+                cache: false,
+                success: function (ss) {
 
-                alert(ss);
-            }
-        });
-    };
-</script>
+                    alert(ss);
+                }
+            });
+        };
+    </script>
 }
