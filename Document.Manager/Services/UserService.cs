@@ -26,6 +26,14 @@ public class UserService : IUserService
     public async Task<UserResponseModelDTO> AddAsync(AddUserRequestModelDTO model)
     {
         var userExistByEmail = await _userRepository.GetAsync(x => x.Email == model.Email);
+        if (userExistByEmail != null)
+        {
+            return new UserResponseModelDTO
+            {
+                Status = false,
+                Message = "User already exist",
+            };
+        }
         var user = model.Adapt<User>();
         var transactionNumber = new Random().Next(1000000000, int.MaxValue);
 

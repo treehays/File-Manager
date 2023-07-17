@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Document.Manager.Migrations
 {
-    public partial class jdsfd : Migration
+    public partial class greate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,9 +16,7 @@ namespace Document.Manager.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -59,7 +57,7 @@ namespace Document.Manager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AttachedDocuments",
+                name: "Documents",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -80,9 +78,9 @@ namespace Document.Manager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AttachedDocuments", x => x.Id);
+                    table.PrimaryKey("PK_Documents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AttachedDocuments_Transaction_TransactionId",
+                        name: "FK_Documents_Transaction_TransactionId",
                         column: x => x.TransactionId,
                         principalTable: "Transaction",
                         principalColumn: "Id",
@@ -90,20 +88,26 @@ namespace Document.Manager.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AttachedDocuments_TransactionId",
-                table: "AttachedDocuments",
+                name: "IX_Documents_TransactionId",
+                table: "Documents",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_UserId",
                 table: "Transaction",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AttachedDocuments");
+                name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "Transaction");

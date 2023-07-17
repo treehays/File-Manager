@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Document.Manager.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230717010352_jdsfddds")]
-    partial class jdsfddds
+    [Migration("20230717094601_greate")]
+    partial class greate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,10 +127,6 @@ namespace Document.Manager.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -161,10 +157,6 @@ namespace Document.Manager.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

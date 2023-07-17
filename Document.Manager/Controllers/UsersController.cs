@@ -14,6 +14,7 @@ public class UsersController : Controller
 
     public IActionResult Index()
     {
+
         return View();
     }
 
@@ -32,9 +33,9 @@ public class UsersController : Controller
             return View(documents);
         }
         TempData["success"] = documents.Message;
-
         return View(documents);
     }
+
 
     public async Task<IActionResult> AddUser()
     {
@@ -49,8 +50,9 @@ public class UsersController : Controller
         if (!user.Status)
         {
             TempData["failed"] = user.Message;
+            return View();
         }
         TempData["success"] = user.Message;
-        return View();
+        return RedirectToAction("index", "Home");
     }
 }
