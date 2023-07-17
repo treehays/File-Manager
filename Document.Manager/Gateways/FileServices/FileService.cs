@@ -1,6 +1,4 @@
-﻿using Document.Manager.Models.DTOs.FileDTOs;
-
-namespace Document.Manager.Gateways.FileServices;
+﻿namespace Document.Manager.Gateways.FileServices;
 
 public class FileService : IFileService
 {
@@ -86,9 +84,8 @@ public class FileService : IFileService
             {
                 Extension = fileExtension,
                 FileType = fileType,
-                Name = fileName,
+                Name = fileWithoutName,
                 Filesize = fileSizeInKb,
-                Title = fileWithoutExtension,
             },
         };
         //converting

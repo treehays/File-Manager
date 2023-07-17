@@ -1,13 +1,4 @@
-﻿using Document.Manager.Gateways.EmailServices;
-using Document.Manager.Gateways.FileServices;
-using Document.Manager.Models.DTOs.EmailDTOs;
-using Document.Manager.Models.DTOs.UserDTOs;
-using Document.Manager.Models.Entities;
-using Document.Manager.Repositories;
-using Mapster;
-using sib_api_v3_sdk.Model;
-
-namespace Document.Manager.Services;
+﻿namespace Document.Manager.Services;
 
 public class UserService : IUserService
 {
