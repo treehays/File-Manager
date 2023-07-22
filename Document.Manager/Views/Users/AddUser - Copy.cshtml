@@ -5,7 +5,7 @@
 <partial name="_Notification" />
 @*
     dateofbirt
-    info by
+    info by 
 *@
 <!DOCTYPE html>
 <html>
@@ -38,7 +38,7 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <div>
+              <div>
                 <label asp-for="DateOfBirth" class="control-label"></label>
                 <input asp-for="DateOfBirth" class="form-control" id="DateOfBirth" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
@@ -49,19 +49,6 @@
                 <select asp-for="Gender" class="form-control" id="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
-
-
-            <label for="foods">Select your favorite foods:</label>
-
-            @*<select id="id" name="id" multiple>*@
-            <select id="idms" name="idms" multiple>
-                <option value="pizza">Pizza</option>
-                <option value="burger">Burger</option>
-                <option value="pasta">Pasta</option>
-                <option value="sushi">Sushi</option>
-                <option value="icecream">Ice Cream</option>
-            </select>
-            <br>
 
             <div class="form-group">
                 <label for="FormFiles">Choose file</label>
@@ -96,15 +83,13 @@
                     var fname = files[i].name;
                     data.append("FormFiles", files[i]);
                 }
-                data.append("FirstName");
-                data.append("LastName");
-                data.append("Email");
-                data.append("Address");
-                data.append("DateOfBirth");
-                data.append("PhoneNumber");
-                data.append("Gender");
-                //data.append("idms", $("#idms").val());
-                data.append("idms");
+                data.append("FirstName", $("#FirstName").val());
+                data.append("LastName", $("#LastName").val());
+                data.append("Email", $("#Email").val());
+                data.append("Address", $("#Address").val());
+                data.append("DateOfBirth", $("#DateOfBirth").val());
+                data.append("PhoneNumber", $("#PhoneNumber").val());
+                data.append("Gender", $("#Gender").val());
                 $.ajax({
                     xhr: function () {
                         var xhr = new window.XMLHttpRequest();

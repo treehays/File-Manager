@@ -36,6 +36,11 @@ public class UsersController : Controller
         return View(documents);
     }
 
+    //public async Task<IActionResult> GetUserInformation(string email)
+    //{
+
+    //    return View();
+    //}
 
     public async Task<IActionResult> AddUser()
     {

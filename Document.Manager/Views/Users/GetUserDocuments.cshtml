@@ -16,6 +16,15 @@
         border: 1px solid #ccc;
         padding: 10px;
     }
+
+    .info {
+        margin-bottom: 10px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
 </style>
 <partial name="_Notification" />
 <main class="main">
@@ -40,6 +49,33 @@
             </div>
         </form>
     </div>
+    @if (Model.UserInformationResponseModel is not null)
+    {
+
+
+        <div>
+            <h1>User Information</h1>
+            <br />
+            <div class="info">
+                <span class="label">First Name:</span> <span>@Model.UserInformationResponseModel.FirstName</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Last Name:</span> <span>@Model.UserInformationResponseModel.LastName</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Email:</span> <span>@Model.UserInformationResponseModel.Email</span>
+            </div>
+
+            <div class="info">
+                <span class="label">Data of Birth:</span> <span>@Model.UserInformationResponseModel.DateOfBirth</span>
+            </div>
+
+        </div>
+    }
+
+
     @if (Model.Status)
     {
 
@@ -59,5 +95,5 @@
             }
         </ul>
     }
- 
+
 </main>

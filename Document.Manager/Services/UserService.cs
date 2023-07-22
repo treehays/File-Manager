@@ -102,11 +102,13 @@ public class UserService : IUserService
                 Datas = Enumerable.Empty<UsersDTO>().ToList(),
             };
         }
-
+        var userInfo = await _userRepository.GetAsync(x => x.Email == model.Email);
+        var userModel = userInfo.Adapt<UserInformationResponseModel>();
         var response = new UsersResponseModelDTO
         {
             Status = true,
-            Message = "Retrirved succesfully",
+            Message = "Retrirved succesfully", 
+            UserInformationResponseModel = userModel,
             Datas = user.Select(x =>
             new UsersDTO
             {
@@ -119,5 +121,22 @@ public class UserService : IUserService
             //Datas = user.Adapt<List<UsersDTO>>(),
         };
         return response;
+    }
+
+    public async Task<UserInformationResponseModel> GetUserInfomationAsync(string email)
+    {
+        var user = await _userRepository.GetAsync(x => x.Email == email);
+        if (user is null)
+        {
+            return new UserInformationResponseModel
+            {
+                Status = false,
+                Message= "user not found."
+            };
+        }
+        var userModel = user.Adapt<UserInformationResponseModel>();
+        userModel.Status = true;
+        userModel.Message = "User retrived sucess";
+        return userModel;
     }
 }

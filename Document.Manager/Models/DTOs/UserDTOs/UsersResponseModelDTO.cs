@@ -4,5 +4,6 @@ public class UsersResponseModelDTO
 {
     public string Message { get; set; }
     public bool Status { get; set; }
+    public UserInformationResponseModel UserInformationResponseModel { get; set; }
     public IList<UsersDTO> Datas { get; set; }
 }
